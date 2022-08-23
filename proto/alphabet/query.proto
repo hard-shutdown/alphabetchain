@@ -5,6 +5,7 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "alphabet/params.proto";
+import "alphabet/letter.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "alphabet/x/alphabet/types";
@@ -15,7 +16,17 @@ service Query {
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/alphabet/alphabet/params";
   }
-  // this line is used by starport scaffolding # 2
+  // Queries a Letter by index.
+	rpc Letter(QueryGetLetterRequest) returns (QueryGetLetterResponse) {
+		option (google.api.http).get = "/alphabet/alphabet/letter/{index}";
+	}
+
+	// Queries a list of Letter items.
+	rpc LetterAll(QueryAllLetterRequest) returns (QueryAllLetterResponse) {
+		option (google.api.http).get = "/alphabet/alphabet/letter";
+	}
+
+// this line is used by starport scaffolding # 2
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -25,6 +36,24 @@ message QueryParamsRequest {}
 message QueryParamsResponse {
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetLetterRequest {
+	  string index = 1;
+
+}
+
+message QueryGetLetterResponse {
+	Letter letter = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllLetterRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllLetterResponse {
+	repeated Letter letter = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3

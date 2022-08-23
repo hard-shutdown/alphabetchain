@@ -1,0 +1,13 @@
+syntax = "proto3";
+package alphabet.alphabet;
+
+option go_package = "alphabet/x/alphabet/types";
+
+message Letter {
+  string index = 1; 
+  string letter = 2; 
+  string owner = 3; 
+  string price = 4; 
+  
+}
+
