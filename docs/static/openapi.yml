@@ -30409,6 +30409,10 @@ paths:
       tags:
         - Query
 definitions:
+  alphabet.alphabet.MsgBuyLetterResponse:
+    type: object
+  alphabet.alphabet.MsgSellLetterResponse:
+    type: object
   alphabet.alphabet.Params:
     type: object
     description: Params defines the parameters for the module.

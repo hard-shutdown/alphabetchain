@@ -9,6 +9,10 @@
  * ---------------------------------------------------------------
  */
 
+export type AlphabetMsgBuyLetterResponse = object;
+
+export type AlphabetMsgSellLetterResponse = object;
+
 /**
  * Params defines the parameters for the module.
  */

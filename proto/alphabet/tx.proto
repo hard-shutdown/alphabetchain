@@ -7,7 +7,26 @@ option go_package = "alphabet/x/alphabet/types";
 
 // Msg defines the Msg service.
 service Msg {
-    // this line is used by starport scaffolding # proto/tx/rpc
+      rpc BuyLetter(MsgBuyLetter) returns (MsgBuyLetterResponse);
+  rpc SellLetter(MsgSellLetter) returns (MsgSellLetterResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgBuyLetter {
+  string creator = 1;
+  string letter = 2;
+  string amount = 3;
+}
+
+message MsgBuyLetterResponse {
+}
+
+message MsgSellLetter {
+  string creator = 1;
+  string letter = 2;
+}
+
+message MsgSellLetterResponse {
 }
 
 // this line is used by starport scaffolding # proto/tx/message

@@ -24,7 +24,15 @@ var (
 )
 
 const (
-// this line is used by starport scaffolding # simapp/module/const
+	opWeightMsgBuyLetter = "op_weight_msg_buy_letter"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgBuyLetter int = 100
+
+	opWeightMsgSellLetter = "op_weight_msg_sell_letter"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgSellLetter int = 100
+
+	// this line is used by starport scaffolding # simapp/module/const
 )
 
 // GenerateGenesisState creates a randomized GenState of the module
@@ -57,6 +65,28 @@ func (am AppModule) RegisterStoreDecoder(_ sdk.StoreDecoderRegistry) {}
 // WeightedOperations returns the all the gov module operations with their respective weights.
 func (am AppModule) WeightedOperations(simState module.SimulationState) []simtypes.WeightedOperation {
 	operations := make([]simtypes.WeightedOperation, 0)
+
+	var weightMsgBuyLetter int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgBuyLetter, &weightMsgBuyLetter, nil,
+		func(_ *rand.Rand) {
+			weightMsgBuyLetter = defaultWeightMsgBuyLetter
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgBuyLetter,
+		alphabetsimulation.SimulateMsgBuyLetter(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgSellLetter int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgSellLetter, &weightMsgSellLetter, nil,
+		func(_ *rand.Rand) {
+			weightMsgSellLetter = defaultWeightMsgSellLetter
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgSellLetter,
+		alphabetsimulation.SimulateMsgSellLetter(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
 
 	// this line is used by starport scaffolding # simapp/module/operation
 
